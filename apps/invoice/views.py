@@ -6,6 +6,9 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.template.loader import get_template
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 from rest_framework import viewsets, status, authentication, permissions
 from rest_framework.decorators import (
@@ -62,6 +65,19 @@ class ItemViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(invoice__id=invoice_id)
 
 
+def generate_pdf_func(invoice, team):
+    template_name = "pdf.html"
+
+    if invoice.is_credit_for:
+        template_name = "pdf_creditnote.html"
+
+    template = get_template(template_name)
+    html = template.render({"invoice": invoice, "team": team})
+    pdf = pdfkit.from_string(html, False, options={})
+
+    return pdf
+
+
 # Generate PDFs for an invoice
 @api_view(["GET"])
 @authentication_classes([authentication.TokenAuthentication])
@@ -69,11 +85,52 @@ class ItemViewSet(viewsets.ModelViewSet):
 def generate_pdf(request, invoice_id):
     invoice = get_object_or_404(Invoice, pk=invoice_id, created_by=request.user)
     team = Team.objects.filter(created_by=request.user).first()
-    template = get_template("pdf.html")
-    html = template.render({"invoice": invoice, "team": team})
-    pdf = pdfkit.from_string(html, False, options={})
+
+    pdf = generate_pdf_func(invoice, team)
 
     response = HttpResponse(pdf, content_type="application/pdf")
     response["Content-Disposition"] = 'attachment; filename="invoice.pdf"'
 
     return response
+
+
+@api_view(["POST"])
+@authentication_classes([authentication.TokenAuthentication])
+@permission_classes([permissions.IsAuthenticated])
+def send_reminder(request, invoice_id):
+
+    # send email with pdf of invoice
+    invoice = get_object_or_404(Invoice, pk=invoice_id, created_by=request.user)
+    team = Team.objects.filter(created_by=request.user).first()
+
+    if invoice:
+        html_message = render_to_string("pdf.html", {"invoice": invoice})
+        if invoice.is_credit_for:
+            html_message = render_to_string("pdf_creditnote.html", {"invoice": invoice})
+        # extracts plain text from html message without the tags.
+        plain_message = strip_tags(html_message)
+
+        message = EmailMultiAlternatives(
+            subject="Payment reminder",
+            body=plain_message,
+            from_email=None,
+            to=[invoice.client_email],
+        )
+
+        message.attach_alternative(html_message, "text/html")
+
+        # attach pdf file to email---starts here
+
+        pdf = generate_pdf_func(invoice, team)
+
+        message.attach(
+            filename=f"Invoice_{invoice.invoice_number}.pdf",
+            content=pdf,
+            mimetype="application/pdf",
+        )
+        # attach pdf file to email---ends here
+
+        message.send()
+
+        return Response({"message": "Successfully sent reminder"})
+    return Response({"message": "Failed"})

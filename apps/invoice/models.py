@@ -40,6 +40,7 @@ class Invoice(models.Model):
     is_credit_for = models.ForeignKey(
         "self", on_delete=models.CASCADE, blank=True, null=True
     )
+    is_credited = models.BooleanField(default=False)
     is_sent = models.BooleanField(default=False)
     is_paid = models.BooleanField(default=False)
     bankaccount = models.CharField(max_length=255, blank=True, null=True)
