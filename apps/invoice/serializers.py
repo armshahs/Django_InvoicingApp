@@ -23,6 +23,8 @@ class ItemSerializer(serializers.ModelSerializer):
 
 class InvoiceSerializer(serializers.ModelSerializer):
     items = ItemSerializer(many=True)
+    # serializer will still save it even if this is not declared. Will assign a null value.
+    bankaccount = serializers.CharField(required=False)
 
     class Meta:
         model = Invoice
@@ -53,6 +55,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "due_days",
             "is_sent",
             "is_paid",
+            "bankaccount",
             "gross_amount",
             "vat_amount",
             "net_amount",

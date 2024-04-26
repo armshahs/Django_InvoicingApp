@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+import decimal
+from datetime import timedelta
+
 from apps.client.models import Client
 from apps.team.models import Team
 
@@ -39,6 +42,7 @@ class Invoice(models.Model):
     )
     is_sent = models.BooleanField(default=False)
     is_paid = models.BooleanField(default=False)
+    bankaccount = models.CharField(max_length=255, blank=True, null=True)
 
     gross_amount = models.DecimalField(max_digits=6, decimal_places=2)
     vat_amount = models.DecimalField(max_digits=6, decimal_places=2)
@@ -65,6 +69,12 @@ class Invoice(models.Model):
     def __str__(self):
         return f"{self.invoice_number} - {self.client_name} - {self.invoice_type}"
 
+    def get_due_date(self):
+        return self.created_at + timedelta(days=self.due_days)
+
+    def get_due_date_formatted(self):
+        return self.get_due_date().strftime("%d.%m.%Y")
+
 
 class Item(models.Model):
     invoice = models.ForeignKey(Invoice, related_name="items", on_delete=models.CASCADE)
@@ -82,3 +92,7 @@ class Item(models.Model):
         # Calculate the net amount as the product of quantity and unit_price
         self.net_amount = self.quantity * self.unit_price
         super().save(*args, **kwargs)
+
+    def get_gross_amount(self):
+        vat_rate = decimal.Decimal(self.vat_rate / 100)
+        return self.net_amount + (self.net_amount * vat_rate)
