@@ -1,1 +1,1 @@
-# invoicingApp_django
+# invoicing_app_django
