@@ -52,7 +52,7 @@ class Invoice(models.Model):
 
     team = models.ForeignKey(Team, related_name="invoices", on_delete=models.CASCADE)
     client = models.ForeignKey(
-        Client, related_name="invoices", on_delete=models.CASCADE
+        Client, related_name="invoices", on_delete=models.CASCADE, blank=True, null=True
     )
 
     modified_by = models.ForeignKey(

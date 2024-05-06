@@ -44,3 +44,28 @@ class ClientSerializer(serializers.ModelSerializer):
             "contact_reference",
             "invoices",
         )
+
+
+class ClientPutSerializer(serializers.ModelSerializer):
+    # invoices = ClientInvoiceSerializer(many=True)
+
+    class Meta:
+        model = Client
+        read_only_fields = (
+            "created_at",
+            "created_by",
+        )
+        fields = (
+            "id",
+            "name",
+            "email",
+            "org_number",
+            "address_1",
+            "address_2",
+            "zipcode",
+            "place",
+            "country",
+            "contact_person",
+            "contact_reference",
+            # "invoices",
+        )
