@@ -1,5 +1,6 @@
 # Invoicing App using Django
 
+
 ## Overview
 
 This project is an invoicing application built using Django, designed to help businesses manage their invoicing process efficiently. It provides features for creating invoices, managing clients, tracking payments, and generating pdf invoices.
@@ -7,6 +8,7 @@ This project is an invoicing application built using Django, designed to help bu
 **Links:**
 1. Frontend code - https://github.com/armshahs/invoiceapp_frontend_vue
 2. Product demo - https://www.youtube.com/watch?v=XpkBB3E0O5I
+
 
 ## Features
 
@@ -16,6 +18,7 @@ This project is an invoicing application built using Django, designed to help bu
 - **Report Generation:** Generate pdf reports for invoices.
 - **Reminder Emails:** Send payment reminder emails with pdf attachments.
 - **Customization:** Customize invoice templates and settings to suit business needs.
+
 
 ## URL Endpoints
 
