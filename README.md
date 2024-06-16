@@ -34,7 +34,7 @@ This project is an invoicing application built using Django, designed to help bu
 - **Client List:** GET `api/v1/clients/` 
 - **Create Client:** POST `api/v1/clients/` 
 - **Edit Client:** PUT/PATCH `api/v1/clients/<int:id>/`
-- **Delete Client:** DELETE `api/v1/clients/<int:id>//`
+- **Delete Client:** DELETE `api/v1/clients/<int:id>/`
 
 
 ### Teams
@@ -42,7 +42,7 @@ This project is an invoicing application built using Django, designed to help bu
 - **Get Team:** GET `api/v1/teams/`
 - **Create Team:** POST `api/v1/teams/`
 - **Edit Team:** PUT/PATCH `api/v1/teams/<int:id>/`
-- **Delete Team:** DELETE `api/v1/teams/<int:id>//`
+- **Delete Team:** DELETE `api/v1/teams/<int:id>/`
 
 
 ### Invoices
