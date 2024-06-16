@@ -28,17 +28,20 @@ This project is an invoicing application built using Django, designed to help bu
 - **Login:** `api/v1/token/login/`
 - **Logout:** `api/v1/token/logout/`
 
+
 ### Clients
 
 - **Create Client:** POST `api/v1/clients/`
 - **Edit Client:** PUT/PATCH `api/v1/clients/<int:id>/`
 - **Delete Client:** DELETE `api/v1/clients/<int:id>//`
 
-  ### Teams
+
+### Teams
 
 - **Create Team:** POST `api/v1/teams/`
 - **Edit Team:** PUT/PATCH `api/v1/teams/<int:id>/`
 - **Delete Team:** DELETE `api/v1/teams/<int:id>//`
+
 
 ### Invoices
 
@@ -47,9 +50,11 @@ This project is an invoicing application built using Django, designed to help bu
 - **Delete Invoice:** DELETE `api/v1/invoices/<int:id>/`
 - **Items in a given invoice Invoice (invoice_id as query param):** `/api/v1/items/?invoice_id=<int: id>`
 
+
 ### Invoice PDF Generation
 
 - **Download invoice PDF:**  `api/v1/invoices/<int:invoice_id>/generate_pdf/`
+
 
 ### Reminder Emails with PDF attachments
 
