@@ -15,8 +15,8 @@ This project is an invoicing application built using Django, designed to help bu
 - **Invoice Creation:** Create and manage invoices.
 - **Client Management:** Manage client information and track client interactions.
 - **Payment Tracking:** Track payments and monitor outstanding balances.
-- **Report Generation:** Generate pdf reports for invoices.
-- **Reminder Emails:** Send payment reminder emails with pdf attachments.
+- **Report Generation:** Generate PDF reports for invoices.
+- **Reminder Emails:** Send payment reminder emails with PDF attachments.
 - **Customization:** Customize invoice templates and settings to suit business needs.
 
 
@@ -108,8 +108,8 @@ python manage.py runserver
 2. Create clients by navigating to the Clients section and adding client details.
 3. Create invoices for clients, specifying the items, quantities, and prices.
 4. Track payments by recording payments against invoices.
-5. Generate invoice pdfs.
-6. Send payment reminder emails with pdf attachments
+5. Generate invoice PDFs.
+6. Send payment reminder emails with PDF attachments
 
 ## Contributing
 
