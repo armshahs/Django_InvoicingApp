@@ -24,33 +24,36 @@ This project is an invoicing application built using Django, designed to help bu
 
 ### Authentication
 
-- **Registration:** `/register/`
-- **Login:** `/login/`
-- **Logout:** `/logout/`
-
-### Invoices
-
-- **Create Invoice:** `/invoice/create/`
-- **Edit Invoice:** `/invoice/<invoice_id>/edit/`
-- **Delete Invoice:** `/invoice/<invoice_id>/delete/`
+- **Registration:** `api/v1/users/`
+- **Login:** `api/v1/token/login/`
+- **Logout:** `api/v1/token/logout/`
 
 ### Clients
 
-- **Create Client:** `/client/create/`
-- **Edit Client:** `/client/<client_id>/edit/`
-- **Delete Client:** `/client/<client_id>/delete/`
+- **Create Client:** POST `api/v1/clients/`
+- **Edit Client:** PUT/PATCH `api/v1/clients/<int:id>/`
+- **Delete Client:** DELETE `api/v1/clients/<int:id>//`
 
-### Payments
+  ### Teams
 
-- **Record Payment:** `/payment/create/`
-- **Edit Payment:** `/payment/<payment_id>/edit/`
-- **Delete Payment:** `/payment/<payment_id>/delete/`
+- **Create Team:** POST `api/v1/teams/`
+- **Edit Team:** PUT/PATCH `api/v1/teams/<int:id>/`
+- **Delete Team:** DELETE `api/v1/teams/<int:id>//`
 
-### Reports
+### Invoices
 
-- **Generate Invoice Report:** `/report/invoices/`
-- **Generate Payment Report:** `/report/payments/`
-- **Generate Client Report:** `/report/clients/`
+- **Create Invoice:** POST `api/v1/invoices/`
+- **Edit Invoice:** PUT/PATCH `api/v1/invoices/<int:id>/`
+- **Delete Invoice:** DELETE `api/v1/invoices/<int:id>/`
+- **Items in a given invoice Invoice (invoice_id as query param):** `/api/v1/items/?invoice_id=<int: id>`
+
+### Invoice PDF Generation
+
+- **Download invoice PDF:**  `api/v1/invoices/<int:invoice_id>/generate_pdf/`
+
+### Reminder Emails with PDF attachments
+
+- **Invoice send email reminder:**  `api/v1/invoices/<int:invoice_id>/send_reminder/`
 
 
 ## Installation
